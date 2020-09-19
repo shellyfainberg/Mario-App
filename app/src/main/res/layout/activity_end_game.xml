@@ -48,7 +48,7 @@
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
                 android:background="@color/colorPrimary"
-                android:text="Menu" />
+                android:text="@string/menu" />
 
             <Button
                 android:id="@+id/acitivityEndGame_BTN_playAgain"
@@ -58,7 +58,7 @@
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
                 android:background="@color/colorPrimary"
-                android:text="Play again" />
+                android:text="@string/Play_again" />
 
             <Button
                 android:id="@+id/acitivityEndGame_BTN_topTen"
@@ -68,7 +68,7 @@
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
                 android:background="@color/colorPrimary"
-                android:text="Top 10" />
+                android:text="@string/Top_10" />
 
         </LinearLayout>
     </RelativeLayout>

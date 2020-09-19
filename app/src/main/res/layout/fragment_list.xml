@@ -18,7 +18,7 @@
 
         <TableRow>
             <TextView
-                android:text="Topten"
+                android:text="@string/Top_10"
                 android:textColor="@color/colorPrimary"
                 android:textSize="10sp"
                 android:layout_marginRight="10dp"
@@ -27,7 +27,7 @@
                 />
 
             <TextView
-                android:text="Name"
+                android:text="@string/Name"
                 android:textColor="@color/colorPrimary"
                 android:textSize="10sp"
                 android:layout_marginRight="2dp"
@@ -36,7 +36,7 @@
                 />
 
             <TextView
-                android:text="Time"
+                android:text="@string/Time"
                 android:textColor="@color/colorPrimary"
                 android:textSize="10sp"
                 android:layout_marginRight="10dp"
@@ -44,7 +44,7 @@
                />
 
             <TextView
-                android:text="Moves"
+                android:text="@string/Moves"
                 android:textColor="@color/colorPrimary"
                 android:textSize="10sp"
                 android:layout_marginRight="10dp"

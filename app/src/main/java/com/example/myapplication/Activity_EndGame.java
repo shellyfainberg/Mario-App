@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -83,11 +84,9 @@ public class Activity_EndGame extends AppCompatActivity {
 
     private void setWinnerImge(int player_number) {
         if (player_number == 1) {
-            activityEndGame_IMG_winnerImg.setImageResource(R.drawable.ic_luigi);
-        } else {
             activityEndGame_IMG_winnerImg.setImageResource(R.drawable.ic_mario);
+        } else {
+            activityEndGame_IMG_winnerImg.setImageResource(R.drawable.ic_luigi);
         }
-
     }
-
 }

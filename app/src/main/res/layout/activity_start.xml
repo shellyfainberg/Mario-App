@@ -26,7 +26,7 @@
                 android:layout_marginLeft="200dp"
                 android:layout_marginTop="160dp"
                 android:textSize="40dp"
-                android:text="Start Game" />
+                android:text="@string/start_game" />
 
             <Button
                 android:id="@+id/start_BTN_topten"
@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="260dp"
                 android:background="@drawable/ic_clear"
-                android:text="Top 10"
+                android:text="@string/Top_10"
                 android:textColor="@color/colorPrimary"
                 android:textSize="40dp"
                 />

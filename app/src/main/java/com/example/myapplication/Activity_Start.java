@@ -5,6 +5,7 @@ import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -14,11 +15,14 @@ public class Activity_Start extends AppCompatActivity {
 
     private Button start_BTN_startGame;
     private Button start_BTN_topten;
+    MediaPlayer mysound;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
+        mysound = MediaPlayer.create(this, R.raw.smb_mariodie);
+        mysound.start();
 
         findViews();
         CheckPremission();
