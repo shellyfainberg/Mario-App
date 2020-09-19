@@ -25,7 +25,7 @@
                 android:background="@drawable/ic_clear"
                 android:layout_marginLeft="200dp"
                 android:layout_marginTop="160dp"
-                android:textSize="40dp"
+                android:textSize="40sp"
                 android:text="@string/start_game" />
 
             <Button
@@ -36,7 +36,7 @@
                 android:background="@drawable/ic_clear"
                 android:text="@string/Top_10"
                 android:textColor="@color/colorPrimary"
-                android:textSize="40dp"
+                android:textSize="40sp"
                 />
 
 

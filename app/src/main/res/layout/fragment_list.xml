@@ -20,7 +20,7 @@
             <TextView
                 android:text="@string/Top_10"
                 android:textColor="@color/colorPrimary"
-                android:textSize="10sp"
+                android:textSize="12sp"
                 android:layout_marginRight="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1"
@@ -29,7 +29,7 @@
             <TextView
                 android:text="@string/Name"
                 android:textColor="@color/colorPrimary"
-                android:textSize="10sp"
+                android:textSize="12sp"
                 android:layout_marginRight="2dp"
                 android:layout_marginLeft="20dp"
                 android:layout_weight="1"
@@ -38,7 +38,7 @@
             <TextView
                 android:text="@string/Time"
                 android:textColor="@color/colorPrimary"
-                android:textSize="10sp"
+                android:textSize="12sp"
                 android:layout_marginRight="10dp"
                 android:layout_marginLeft="40dp"
                />
@@ -46,7 +46,7 @@
             <TextView
                 android:text="@string/Moves"
                 android:textColor="@color/colorPrimary"
-                android:textSize="10sp"
+                android:textSize="12sp"
                 android:layout_marginRight="10dp"
                 android:layout_marginLeft="2dp"
                 android:layout_weight="1"

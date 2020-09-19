@@ -21,7 +21,7 @@
             android:layout_gravity="center"
             android:layout_marginLeft="150dp"
             android:layout_marginTop="200dp"
-            android:text="Winner"
+            android:text="@string/Winner"
             android:textColor="@color/colorPrimary"
             android:textSize="30sp" />
 
