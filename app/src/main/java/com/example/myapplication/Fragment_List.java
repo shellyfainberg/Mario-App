@@ -1,24 +1,23 @@
 package com.example.myapplication;
 
 import android.os.Bundle;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
 
-// This fragment represent the top10 ist in a table
 public class Fragment_List extends Fragment {
 
     private View view;
-    private TableLayout List_TBL_TopTen;
+    private TableLayout fragmentList_TBL_ToptenList;
 
     private CallBack_TopTen callBack_topTen;
 
@@ -40,7 +39,7 @@ public class Fragment_List extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        if(view == null){
+        if (view == null) {
             view = inflater.inflate(R.layout.fragment_list, container, false);
         }
 
@@ -54,7 +53,7 @@ public class Fragment_List extends Fragment {
     }
 
     private void findViews(View view) {
-        List_TBL_TopTen = view.findViewById(R.id.List_TBL_TopTen);
+        fragmentList_TBL_ToptenList = view.findViewById(R.id.fragmentList_TBL_ToptenList);
     }
 
     @Override
@@ -62,45 +61,34 @@ public class Fragment_List extends Fragment {
         super.onSaveInstanceState(outState);
     }
 
-    // Set table and display it
-    protected void setTable(ArrayList<Winner> tops){
+    protected void setToptenTable(ArrayList<Winner> scores) {
         int counter = 1;
-        // Display only 10 first results
-        for(Winner current: tops) {
-            if(counter <= 10) {
-                setRowWithWinner(current.getName(), current.getNumOfMoves(), current.getTimestamp(), counter);
-                //increase counter
+        // 10 first results
+        for (Winner current : scores) {
+            if (counter <= 10) {
+                setRow(current.getName(), current.getNumOfMoves(), current.getTime(), counter);
                 counter++;
-            }
-            else return;
+            } else return;
         }
     }
 
-    // Set 1 row in top10 table
-    private void setRowWithWinner(String winner_name, int numberOfMoves, String timestamp, int counter) {
-        // Define new row
+    //set row with winner
+    private void setRow(String winner_name, int numberOfMoves, String time, int counter) {
+
         TableRow row = new TableRow(getActivity());
-
-        // Set columns text texts
-        setCell("" + counter, row);
-        setCell(winner_name, row);
-        setCell(timestamp, row);
-        setCell("" + numberOfMoves, row);
-
-        // Add new row to table
-        List_TBL_TopTen.addView(row);
+        setRecord("" + counter, row);
+        setRecord(winner_name, row);
+        setRecord(time, row);
+        setRecord("" + numberOfMoves, row);
+        fragmentList_TBL_ToptenList.addView(row);
     }
 
-    // Set 1 cell in a row
-    private void setCell(String str, TableRow row){
-        // Define cell
+
+    private void setRecord(String str, TableRow row) {
         TextView txt = new TextView(getActivity().getApplication());
-        // Set columns text texts
         txt.setText(str);
-        //Style
-        txt.setTextSize(TypedValue.COMPLEX_UNIT_DIP,10);
+        txt.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 10);
         txt.setGravity(1);
-        // Add cell to new row
         row.addView(txt);
 
     }

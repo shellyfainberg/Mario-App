@@ -10,68 +10,65 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#695980"
-        tools:layout_editor_absoluteX="-16dp"
-        tools:layout_editor_absoluteY="-225dp">
+        android:background="@drawable/ic_background1"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
 
         <TextView
-            android:id="@+id/ENDGAME_TXT_CURRENT_WINNER"
-            android:layout_width="match_parent"
-            android:layout_height="69dp"
+            android:id="@+id/activityEndGame_TXT_nameOfWinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginLeft="150dp"
+            android:layout_marginTop="200dp"
             android:text="Winner"
-            android:textColor="@color/colorAccent"
-            android:textSize="25dp" />
+            android:textColor="@color/colorPrimary"
+            android:textSize="30sp" />
 
         <ImageView
-            android:id="@+id/ENDGAME_IMG_WINNER"
-            android:layout_width="255dp"
-            android:layout_height="369dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_gravity="center"
-            android:layout_marginTop="189dp"
-            android:layout_marginEnd="75dp"
-            android:layout_marginBottom="173dp"
-            app:srcCompat="@drawable/ic_mario" />
+            android:id="@+id/activityEndGame_IMG_winnerImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="450dp"
+            android:layout_marginTop="140dp"
+            />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:background="@color/colorAccent"
+            android:background="@drawable/ic_clear"
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/ENDGAME_BTN_Main_Page"
+                android:id="@+id/acitivityEndGame_BTN_backToMenu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
                 android:background="@color/colorPrimary"
-                android:text="Go to Main Page" />
+                android:text="Menu" />
 
             <Button
-                android:id="@+id/ENDGAME_BTN_NEWGMAE"
+                android:id="@+id/acitivityEndGame_BTN_playAgain"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
                 android:background="@color/colorPrimary"
-                android:text="start_new_game" />
+                android:text="Play again" />
 
             <Button
-                android:id="@+id/ENDGAME_BTN_TOP10"
+                android:id="@+id/acitivityEndGame_BTN_topTen"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
                 android:background="@color/colorPrimary"
-                android:text="See Top10" />
+                android:text="Top 10" />
 
         </LinearLayout>
     </RelativeLayout>

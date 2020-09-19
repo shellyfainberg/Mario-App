@@ -5,7 +5,7 @@
 
 
     <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/List_TBL_TopTen"
+        android:id="@+id/fragmentList_TBL_ToptenList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:stretchColumns="1"
@@ -13,43 +13,44 @@
         android:layout_marginEnd="20dp"
         android:layout_marginStart="20dp"
         android:padding="5dp"
-        android:background="#70B8DF"
+        android:background="@drawable/ic_clear"
         >
 
         <TableRow>
             <TextView
-                android:text="Place"
+                android:text="Topten"
                 android:textColor="@color/colorPrimary"
-                android:textSize="7dp"
+                android:textSize="10sp"
                 android:layout_marginRight="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1"
-                style="?android:listSeparatorTextViewStyle"/>
+                />
 
             <TextView
                 android:text="Name"
                 android:textColor="@color/colorPrimary"
-                android:textSize="7dp"
+                android:textSize="10sp"
                 android:layout_marginRight="2dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="20dp"
                 android:layout_weight="1"
-                style="?android:listSeparatorTextViewStyle"/>
-            <TextView
-                android:text="time"
-                android:textColor="@color/colorPrimary"
-                android:textSize="7dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginLeft="10dp"
-                style="?android:listSeparatorTextViewStyle"/>
+                />
 
             <TextView
-                android:text="Number Of Moves"
+                android:text="Time"
                 android:textColor="@color/colorPrimary"
-                android:textSize="7dp"
+                android:textSize="10sp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="40dp"
+               />
+
+            <TextView
+                android:text="Moves"
+                android:textColor="@color/colorPrimary"
+                android:textSize="10sp"
                 android:layout_marginRight="10dp"
                 android:layout_marginLeft="2dp"
                 android:layout_weight="1"
-                style="?android:listSeparatorTextViewStyle"/>
+               />
 
         </TableRow>
 

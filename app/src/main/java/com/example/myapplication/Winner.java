@@ -4,66 +4,24 @@ import java.util.Date;
 
 public class Winner {
 
-    private double lat = 0;
-    private double lon = 0;
-    private String timestamp = "";
-    private int numOfMoves = 99;
     private String name = "";
     private int player_number = 0;
+    private int numOfMoves = 99;
+    private double lat = 0;
+    private double lon = 0;
+    private String time = "";
 
     public Winner() {
-        this.timestamp = java.text.DateFormat.getDateTimeInstance().format(new Date());
+        this.time = java.text.DateFormat.getDateTimeInstance().format(new Date());
     }
 
-    public Winner(String name, int player_number) {
+    public Winner(String name, int player_number, int numOfMoves, double lat, double lon, String time) {
         this.name = name;
         this.player_number = player_number;
-        this.timestamp = java.text.DateFormat.getDateTimeInstance().format(new Date());
-    }
-
-    public Winner(double lat, double lon, String timestamp, int numOfMoves, String name, int player_number) {
+        this.numOfMoves = numOfMoves;
         this.lat = lat;
         this.lon = lon;
-        this.timestamp = timestamp;
-        this.numOfMoves = numOfMoves;
-        this.name = name;
-        this.player_number = player_number;
-    }
-
-    public double getLat() {
-        return lat;
-    }
-
-    public Winner setLat(double lat) {
-        this.lat = lat;
-        return this;
-    }
-
-    public double getLon() {
-        return lon;
-    }
-
-    public Winner setLon(double lon) {
-        this.lon = lon;
-        return this;
-    }
-
-    public String getTimestamp() {
-        return timestamp;
-    }
-
-    public Winner setTimestamp(String timestamp) {
-        this.timestamp = timestamp;
-        return this;
-    }
-
-    public int getNumOfMoves() {
-        return numOfMoves;
-    }
-
-    public Winner setNumOfMoves(int numOfMoves) {
-        this.numOfMoves = numOfMoves;
-        return this;
+        this.time = time;
     }
 
     public String getName() {
@@ -84,5 +42,39 @@ public class Winner {
         return this;
     }
 
+    public int getNumOfMoves() {
+        return numOfMoves;
+    }
 
+    public Winner setNumOfMoves(int numOfMoves) {
+        this.numOfMoves = numOfMoves;
+        return this;
+    }
+
+    public double getLat() {
+        return lat;
+    }
+
+    public Winner setLat(double lat) {
+        this.lat = lat;
+        return this;
+    }
+
+    public double getLon() {
+        return lon;
+    }
+
+    public Winner setLon(double lon) {
+        this.lon = lon;
+        return this;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public Winner setTime(String time) {
+        this.time = time;
+        return this;
+    }
 }

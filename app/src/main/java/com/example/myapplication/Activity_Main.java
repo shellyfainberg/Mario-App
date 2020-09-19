@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -9,32 +10,36 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
+
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Activity_Main extends AppCompatActivity {
+public class Activity_Main extends AppCompatActivity implements LocationListener{
+    private static final int HP_LIFE_BAR=100;
+    private static final int LIMIT_LIFE_BAR=50;
+    private static final int ATTACK1=10;
+    private static final int ATTACK2=20;
+    private static final int ATTACK3=30;
+    private static final int DELAY_TIME=1000;
 
     private MySp mySp;
     Gson gson = new Gson();
     final Handler handler = new Handler();
     MediaPlayer sound;
+
     // Location
     private LocationManager locationManager;
     private LocationListener locationListener;
@@ -44,18 +49,14 @@ public class Activity_Main extends AppCompatActivity {
     private ProgressBar main_PRB_life_player1;
     private ProgressBar main_PRB_life_player2;
 
-
-    private Button main_BTN_player1_button1;
-    private Button main_BTN_player1_button2;
-    private Button main_BTN_player1_button3;
+    private Button main_BTN_player1_attack1;
+    private Button main_BTN_player1_attack2;
+    private Button main_BTN_player1_attack3;
 
     private Button main_BTN_player2_button1;
     private Button main_BTN_player2_button2;
     private Button main_BTN_player2_button3;
 
-
-    private ProgressBar player1_progressBar;
-    private ProgressBar player2_progressBar;
     private ImageView main_IMG_cube_player1;
     private ImageView main_IMG_cube_player2;
     private ImageView main_IMG_clickHere;
@@ -63,29 +64,18 @@ public class Activity_Main extends AppCompatActivity {
     private int value_cub1;
     private int value_cub2;
 
-    // if Player is even - player1 turn, else player2 turn
+    // if Player = 1 -> player1 turn, player=2 -> player2 turn
     private int player;
-    private boolean end = false;
 
-    // Set number of moves for each player - start with 1
-    private int player1_moves_counter = 1;
-    private int player2_moves_counter = 1;
+    private int player1_moves_counter = 0;
+    private int player2_moves_counter = 0;
 
 
-    // Define Dice parameters
     private ImageView Play_IMGBTN_Dice;
-    private TextView Play_TXT_PlayerTurn;
     private Random rand = new Random();
 
-    // Define dice scores for each player  and initial it with 1
-    int player1_dice_score = 1;
-    int player2_dice_score = 1;
-
-    // Boolean variable that define if we can start the game - initial with false
-    boolean is_game_can_start = false;
-
     // Define Top10 array list to be loaded from SP
-    private ArrayList<Winner> tops;
+    private ArrayList<Winner> scores;
 
 
     @Override
@@ -93,52 +83,40 @@ public class Activity_Main extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Set SP
         mySp = new MySp(this);
 
-        // Set player
         player = 0;
 
-        // Set Who is  rolling the dice
-        Play_TXT_PlayerTurn = findViewById(R.id.Play_TXT_PlayerTurn);
-        Play_TXT_PlayerTurn.setText("Donald Duck");
-
-        // Set location
-        //setLocation();
-
-        // Set dice
+        findViews();
+        setLocation();
         setDice();
+        loadTopTenArrayList();
 
-        // Load top10ArrayList from SP
-        // loadTopTenArrayList();
-
-        // Set Variables as attack buttons and progress bars
-        SetPlayersVars();
 
     }
 
 
-    private void SetPlayersVars() {
+    private void findViews() {
 
-        main_BTN_player1_button1 = findViewById(R.id.main_BTN_player1_button1);
-        main_BTN_player1_button2 = findViewById(R.id.main_BTN_player1_button2);
-        main_BTN_player1_button3 = findViewById(R.id.main_BTN_player1_button3);
+        main_BTN_player1_attack1 = findViewById(R.id.main_BTN_player1_attack1);
+        main_BTN_player1_attack2 = findViewById(R.id.main_BTN_player1_attack2);
+        main_BTN_player1_attack3 = findViewById(R.id.main_BTN_player1_attack3);
 
-        main_BTN_player2_button1 = findViewById(R.id.main_BTN_player2_button1);
-        main_BTN_player2_button2 = findViewById(R.id.main_BTN_player2_button2);
-        main_BTN_player2_button3 = findViewById(R.id.main_BTN_player2_button3);
+        main_BTN_player2_button1 = findViewById(R.id.main_BTN_player2_attack1);
+        main_BTN_player2_button2 = findViewById(R.id.main_BTN_player2_attack2);
+        main_BTN_player2_button3 = findViewById(R.id.main_BTN_player2_attack3);
 
         main_PRB_life_player1 = findViewById(R.id.main_PRB_life_player1);
         main_PRB_life_player2 = findViewById(R.id.main_PRB_life_player2);
 
-        main_PRB_life_player1.setProgress(100);
-        main_PRB_life_player2.setProgress(100);
+        main_PRB_life_player1.setProgress(HP_LIFE_BAR);
+        main_PRB_life_player2.setProgress(HP_LIFE_BAR);
 
         main_IMG_cube_player1 = findViewById(R.id.main_IMG_cube_player1);
         main_IMG_cube_player2 = findViewById(R.id.main_IMG_cube_player2);
         main_IMG_clickHere = findViewById(R.id.main_IMG_clickHere);
 
-        // Set initial value to progress bar
+
 
     }
 
@@ -151,7 +129,7 @@ public class Activity_Main extends AppCompatActivity {
             public void onClick(View view) {
                 rollDice();
                 start();
-               loadTopTenArrayList();
+                loadTopTenArrayList();
 
 
             }
@@ -221,46 +199,40 @@ public class Activity_Main extends AppCompatActivity {
 
 
     private void howStartGame() {
-
         if (value_cub1 > value_cub2) {
             Toast.makeText(this, "luigi start", Toast.LENGTH_SHORT).show();
-            player = 1;
-
+            main_IMG_clickHere.setEnabled(false);
             main_BTN_player2_button1.setEnabled(false);
             main_BTN_player2_button2.setEnabled(false);
             main_BTN_player2_button3.setEnabled(false);
 
-            main_BTN_player1_button1.setEnabled(true);
-            main_BTN_player1_button2.setEnabled(true);
-            main_BTN_player1_button3.setEnabled(true);
-
+            main_BTN_player1_attack1.setEnabled(true);
+            main_BTN_player1_attack2.setEnabled(true);
+            main_BTN_player1_attack3.setEnabled(true);
         } else if (value_cub1 < value_cub2) {
             Toast.makeText(this, "mario start", Toast.LENGTH_SHORT).show();
-            player = 2;
-
-
             main_IMG_clickHere.setEnabled(false);
-
-            main_BTN_player1_button1.setEnabled(false);
-            main_BTN_player1_button2.setEnabled(false);
-            main_BTN_player1_button3.setEnabled(false);
+            main_BTN_player1_attack1.setEnabled(false);
+            main_BTN_player1_attack2.setEnabled(false);
+            main_BTN_player1_attack3.setEnabled(false);
 
             main_BTN_player2_button1.setEnabled(true);
             main_BTN_player2_button2.setEnabled(true);
             main_BTN_player2_button3.setEnabled(true);
-
-        } else  {
-            main_IMG_clickHere.setEnabled(true);
+        } else if (value_cub1 == value_cub2){
             Toast.makeText(this, "Please roll dice again", Toast.LENGTH_SHORT).show();
             rollDice();
             howStartGame();
+
         }
+
+
 
     }
 
     private void start() {
         final Handler handler = new Handler();
-        final int delay = 1000;
+        final int delay = DELAY_TIME;
         handler.postDelayed(new Runnable() {
             public void run() {
                 play();
@@ -273,44 +245,41 @@ public class Activity_Main extends AppCompatActivity {
 
     }
 
-
     private void play() {
         if (player == 1) { //player's 1 turn
             int randomNumber = new Random().nextInt(3);
             if (randomNumber == 0) {
-                main_PRB_life_player2.setProgress(main_PRB_life_player2.getProgress() - 10);
+                main_PRB_life_player2.setProgress(main_PRB_life_player2.getProgress() - ATTACK1);
                 player1_moves_counter++;
             } else if (randomNumber == 1) {
-                main_PRB_life_player2.setProgress(main_PRB_life_player2.getProgress() - 20);
+                main_PRB_life_player2.setProgress(main_PRB_life_player2.getProgress() - ATTACK2);
                 player1_moves_counter++;
             } else if (randomNumber == 2) {
-                main_PRB_life_player2.setProgress(main_PRB_life_player2.getProgress() - 30);
+                main_PRB_life_player2.setProgress(main_PRB_life_player2.getProgress() - ATTACK3);
                 player1_moves_counter++;
             }
             updateLifeBar();
             if (main_PRB_life_player1.getProgress() <= 0 || main_PRB_life_player2.getProgress() <= 0) {
                 howsWin();
-
             }
             player = 2;
 
         } else { //player's 2 turn
             int randomNumber = new Random().nextInt(3);
             if (randomNumber == 0) {
-                main_PRB_life_player1.setProgress(main_PRB_life_player1.getProgress() - 10);
+                main_PRB_life_player1.setProgress(main_PRB_life_player1.getProgress() - ATTACK1);
                 player2_moves_counter++;
             } else if (randomNumber == 1) {
-                main_PRB_life_player1.setProgress(main_PRB_life_player1.getProgress() - 20);
+                main_PRB_life_player1.setProgress(main_PRB_life_player1.getProgress() - ATTACK2);
                 player2_moves_counter++;
             } else if (randomNumber == 2) {
-                main_PRB_life_player1.setProgress(main_PRB_life_player1.getProgress() - 30);
+                main_PRB_life_player1.setProgress(main_PRB_life_player1.getProgress() - ATTACK3);
                 player2_moves_counter++;
             }
             updateLifeBar();
             if (main_PRB_life_player2.getProgress() <= 0 || main_PRB_life_player1.getProgress() <= 0) {
                 // main_IMG_clickHere.setImageResource(R.drawable.ic_mario);
                 howsWin();
-
 
             }
 
@@ -325,88 +294,91 @@ public class Activity_Main extends AppCompatActivity {
         Winner winner = new Winner();
         if (main_PRB_life_player1.getProgress() <= 0) {
             setWinner("mario ", player1_moves_counter, winner);
-            //clickHere.setEnabled(false);
-
         } else {
 
-            setWinner("lugi", player2_moves_counter, winner);
-            //clickHere.setEnabled(false);
+            setWinner("luigi", player2_moves_counter, winner);
         }
+        putWinnerOnSP(winner);
+        addWinnerToArr(winner);
 
-        setWinnerOnSP(winner);
-
-        checkAndAddWinnerToScoresArray(winner);
-
-        // Save tops list with sp in a json format
-        String json = gson.toJson(tops);
+        String json = gson.toJson(scores);
         mySp.putString(MySp.KEYS.TOP_TEN, json);
-
-        // End the Game and open Activity_End_Game to see the winner
-        openEndGame();
+        Intent intent = new Intent(Activity_Main.this, Activity_EndGame.class);
+        startActivity(intent);
     }
 
 
-    private void checkAndAddWinnerToScoresArray(Winner winner) {
-        boolean is_inserted  = false;
-        // Go over each winner in the winners array list and insert current one in the correct place
-        for (Winner t : tops) {
+    private void addWinnerToArr(Winner winner) {
+        boolean isAdd = false;
+        for (Winner t : scores) {
             if (winner.getNumOfMoves() <= t.getNumOfMoves()) {
-                tops.add(tops.indexOf(t), winner);
-                is_inserted = true;
+                scores.add(scores.indexOf(t), winner);
+                isAdd = true;
                 break;
             }
         }
-        //If list size > 0 and winner didn't insert to the array list, add it in the end of the list
-        if(tops.size() < 10 && !is_inserted) {
-            tops.add(winner);
+        if (scores.size() < 10 && !isAdd) {
+            scores.add(winner);
         }
     }
 
 
     private void updateLifeBar() {
-        if (main_PRB_life_player1.getProgress() < 50) {
+        if (main_PRB_life_player1.getProgress() < LIMIT_LIFE_BAR) {
             main_PRB_life_player1.getProgressDrawable().setColorFilter(Color.RED, android.graphics.PorterDuff.Mode.SRC_IN);
         }
-        if (main_PRB_life_player2.getProgress() < 50) {
+        if (main_PRB_life_player2.getProgress() < LIMIT_LIFE_BAR) {
             main_PRB_life_player2.getProgressDrawable().setColorFilter(Color.RED, android.graphics.PorterDuff.Mode.SRC_IN);
         }
 
     }
 
 
-    private void openEndGame() {
-        Intent intent = new Intent(Activity_Main.this, Activity_EndGame.class);
-        startActivity(intent);
-    }
-
-
     private void setWinner(String name, int player1_moves_counter, Winner winner) {
+
         winner.setName(name);
         winner.setNumOfMoves(player1_moves_counter);
         winner.setPlayer_number(player);
 
         // Set Location
-//        winner.setLat(latitude);
-//        winner.setLon(longitude);
+        winner.setLat(latitude);
+        winner.setLon(longitude);
     }
 
-    // Set winner in current sp in order to display it in Activity_End_Game page
-    private void setWinnerOnSP(Winner winner) {
+    private void putWinnerOnSP(Winner winner) {
         String json = gson.toJson(winner);
         mySp.putString(MySp.KEYS.CURRENT_WINNER, json);
     }
 
-    private void loadTopTenArrayList(){
-        String json = mySp.getString(MySp.KEYS.TOP_TEN, null);
-        Type type = new TypeToken<ArrayList<Winner>>() {}.getType();
-        tops = gson.fromJson(json, type);
+    private void setLocation() {
+        locationManager = (LocationManager) getSystemService(this.LOCATION_SERVICE);
 
-        if (tops == null){
-            tops = new ArrayList<>();
+        // Check map permission
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(this, R.string.error_permission_map, Toast.LENGTH_LONG).show();
+            return;
         }
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+        location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        latitude = location.getLatitude();
+        longitude = location.getLongitude();
     }
 
+    private void loadTopTenArrayList() {
+        String json = mySp.getString(MySp.KEYS.TOP_TEN, null);
+        Type type = new TypeToken<ArrayList<Winner>>() {
+        }.getType();
+        scores = gson.fromJson(json, type);
 
+        if (scores == null) {
+            scores = new ArrayList<>();
+        }
+    }
+    @Override
+    public void onLocationChanged(@NonNull Location location) {
+        latitude = location.getLatitude();
+        longitude = location.getLongitude();
+    }
 
 
 }

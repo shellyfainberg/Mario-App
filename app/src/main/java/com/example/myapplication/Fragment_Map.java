@@ -1,17 +1,11 @@
 package com.example.myapplication;
 
-import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -20,17 +14,21 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+
 
 import java.util.ArrayList;
 
-// This fragment represent the top10 locations in google map
-public class Fragment_Map extends Fragment implements OnMapReadyCallback{
-    ArrayList<Winner> tops;
+
+public class Fragment_Map extends Fragment implements OnMapReadyCallback {
+
     protected View view;
     private GoogleMap mgoogleMap;
     MapView mMapView;
-    Context context;
-    ArrayList<Winner> topTen;
+
+    ArrayList<Winner> scores;
 
 
     private CallBack_TopTen callBack_topTen;
@@ -52,9 +50,8 @@ public class Fragment_Map extends Fragment implements OnMapReadyCallback{
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_maps, container, false);
+        view = inflater.inflate(R.layout.fragment_map, container, false);
 
-        //findViews(view);
         if (callBack_topTen != null) {
             callBack_topTen.GetTopsFromSP();
         }
@@ -62,43 +59,31 @@ public class Fragment_Map extends Fragment implements OnMapReadyCallback{
         return view;
     }
 
-    // Set locations in he map for the first 10 winners in top10 table
+    // Set locations on map
     private void showTopTenOnMap(GoogleMap googleMap) {
         int counter = 1;
-        for(Winner current: topTen) {
-            if(counter <= 10) {
+        for (Winner current : scores) {
+            if (counter <= 10) {
                 googleMap.addMarker(new MarkerOptions().position(new LatLng(current.getLat(), current.getLon())).title("place " + counter).snippet(current.getName()));
                 CameraPosition current_pos = CameraPosition.builder().target(new LatLng(current.getLat(), current.getLon())).build();
                 googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(current_pos));
                 //increase counter
                 counter++;
-            }
-            else return;
+            } else return;
         }
     }
 
-    protected void setTopTen(ArrayList<Winner> tops){
-        topTen = tops;
+    protected void setScores(ArrayList<Winner> topten) {
+        scores = topten;
     }
 
-    // Check permission for map
-    private boolean CheckPermission() {
-        if (!(ContextCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) ==
-                PackageManager.PERMISSION_GRANTED &&
-                ContextCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) ==
-                        PackageManager.PERMISSION_GRANTED)) {
-            Toast.makeText(getContext(), "R.string.error_permission_map", Toast.LENGTH_LONG).show();
-            return false;
-        }
-        return true;
-    }
 
     @Override
-    public void onViewCreated( View view,  Bundle savedInstanceState) {
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mMapView = (MapView)view.findViewById(R.id.Maps_map_view);
-        if(mMapView != null){
+        mMapView = (MapView) view.findViewById(R.id.Map_map_view);
+        if (mMapView != null) {
             mMapView.onCreate(null);
             mMapView.onResume();
             mMapView.getMapAsync(this);
@@ -116,6 +101,7 @@ public class Fragment_Map extends Fragment implements OnMapReadyCallback{
         if (!hidden) {
         }
     }
+
     @Override
     public void onResume() {
         super.onResume();

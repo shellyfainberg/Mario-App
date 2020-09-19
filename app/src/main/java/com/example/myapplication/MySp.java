@@ -25,6 +25,7 @@ public class MySp {
     }
 
     public String getString(String key, String def) {
+
         return prefs.getString(key, def);
     }
 
@@ -34,10 +35,12 @@ public class MySp {
         editor.apply();
     }
     public boolean getBoolean(String key, boolean def) {
+
         return prefs.getBoolean(key, def);
     }
 
     public int getInt(String key, int def) {
+
         return prefs.getInt(key, def);
     }
 
@@ -46,28 +49,6 @@ public class MySp {
         editor.putInt(key, value);
         editor.apply();
     }
-
-    public float getFloat(String key, float def) {
-        return prefs.getFloat(key, def);
-    }
-
-    public void putfloat(String key, float value) {
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putFloat(key, value);
-        editor.apply();
-    }
-
-
-    public float getLong(String key, long def) {
-        return prefs.getLong(key, def);
-    }
-
-    public void putLong(String key, long value) {
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putLong(key, value);
-        editor.apply();
-    }
-
 
     public float getDouble(String key, double def) {
         return prefs.getLong(key, Double.doubleToRawLongBits(def));
