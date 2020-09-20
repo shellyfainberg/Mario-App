@@ -8,7 +8,9 @@
          location permissions for the "MyLocation" functionality.
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
 
     <application
         android:allowBackup="true"
@@ -19,7 +21,7 @@
         android:theme="@style/AppTheme">
 
         <!--
-             The API key for Google Maps-based APIs is defined as a string resource.
+             The API key for Google Maps-based APIs is defined asa string resource.
              (See the file "res/values/google_maps_api.xml").
              Note that the API key is linked to the encryption key used to sign the APK.
              You need a different API key for each encryption key, including the release key that is used to
@@ -30,17 +32,20 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".Activity_EndGame"
-            android:screenOrientation="landscape"
-            android:configChanges="orientation|keyboardHidden"/>
+        <activity
+            android:name=".Activity_EndGame"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="landscape" />
 
 
-        <activity android:name=".Activity_Topten"
-            android:screenOrientation="landscape"
-            android:configChanges="orientation|keyboardHidden"/>
+        <activity
+            android:name=".Activity_Topten"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="landscape" />
 
 
-        <activity android:name=".Activity_Start"
+        <activity
+            android:name=".Activity_Start"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -50,10 +55,10 @@
         </activity>
 
 
-
-        <activity android:name=".Activity_Main"
-            android:screenOrientation="landscape"
-            android:configChanges="orientation|keyboardHidden"/>
+        <activity
+            android:name=".Activity_Main"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="landscape" />
 
     </application>
 

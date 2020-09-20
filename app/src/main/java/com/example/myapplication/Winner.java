@@ -61,6 +61,7 @@ public class Winner {
     }
 
     public double getLon() {
+
         return lon;
     }
 

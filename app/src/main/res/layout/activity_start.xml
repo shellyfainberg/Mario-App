@@ -16,6 +16,8 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:gravity="center"
+            android:layout_marginTop="80dp"
             android:orientation="vertical">
             <Button
                 android:id="@+id/start_BTN_startGame"
@@ -23,8 +25,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorPrimary"
                 android:background="@drawable/ic_clear"
-                android:layout_marginLeft="200dp"
-                android:layout_marginTop="160dp"
+                android:layout_gravity="center"
                 android:textSize="40sp"
                 android:text="@string/start_game" />
 
@@ -32,7 +33,7 @@
                 android:id="@+id/start_BTN_topten"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="260dp"
+                android:layout_gravity="center"
                 android:background="@drawable/ic_clear"
                 android:text="@string/Top_10"
                 android:textColor="@color/colorPrimary"
