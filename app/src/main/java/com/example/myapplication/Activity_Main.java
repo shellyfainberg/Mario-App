@@ -217,6 +217,7 @@ public class Activity_Main extends AppCompatActivity implements LocationListener
         if (player == 1) {
             int rnd = (randomNumber.nextInt(3));
             float currentRotation;
+            checkBuff();
             switch (rnd) {
                 case 0:
                     currentRotation = this.main_BTN_player1_attack1.getRotation();
@@ -254,6 +255,7 @@ public class Activity_Main extends AppCompatActivity implements LocationListener
         } else { //player's 2 turn
             int rnd = (randomNumber.nextInt(3));
             float currentRotation;
+            checkBuff();
             switch (rnd) {
                 case 0:
                     main_PRB_life_player1.setProgress(main_PRB_life_player1.getProgress() - ATTACK1);
@@ -305,6 +307,14 @@ public class Activity_Main extends AppCompatActivity implements LocationListener
     private void makeSoundAttack3(){
         mysound = MediaPlayer.create(this, R.raw.smb_kick);
         mysound.start();
+    }
+
+    private void checkBuff(){
+        if (mysound!=null){
+            mysound.reset();;
+
+        }
+
     }
 
 
